@@ -4,6 +4,7 @@ from . import io_utils
 from . import iterator
 from . import summary
 from . import schemeparser
+from . import xml_injector
 
 summary_dir = "./out"
 
@@ -20,6 +21,10 @@ def main():
     config_file = scheme['files']['sumo_configuration']
     attributes = scheme['attributes']
     aggressive_clean = scheme['aggressive_clean']
+    
+    print("Performing vtype injection...")
+    xml_injector.xml_inject_route_file(scheme)
+
 
     print("Performing {} iterations using configuration file {}..."
         .format(iterations, config_file))
