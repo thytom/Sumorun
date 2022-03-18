@@ -25,6 +25,9 @@ def main():
     print("Performing vtype injection...")
     xml_injector.xml_inject_route_file(scheme)
 
+    if arguments.dry_run:
+        print("Dry run completed.")
+        exit(0)
 
     print("Performing {} iterations using configuration file {}..."
         .format(iterations, config_file))

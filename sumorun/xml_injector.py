@@ -32,6 +32,11 @@ def inject_vtypes_and_flows(tree: ET.Element, scheme:dict) -> ET.ElementTree:
     xml_flows = []
     for route in tree.findall("route"):
         for xml_vtype in xml_vtypes:
+            xml_vtype_penetration = float([vt['penetration'] for vt in scheme['vtypes'] if vt['id'] == xml_vtype.get('id')][0])
+            route_cph = scheme['route_cars_per_hour']['override'][route.get('id')]
+            if route_cph is None:
+                route_cph = scheme['route_cars_per_hour']['default']
+            vph = int(xml_vtype_penetration * float(route_cph))
             xml_flow = ET.Element("flow",
             attrib={
                 "id": route.get('id') + xml_vtype.get('id'),
@@ -41,7 +46,7 @@ def inject_vtypes_and_flows(tree: ET.Element, scheme:dict) -> ET.ElementTree:
                 "departSpeed": "max",
                 "arrivalLane": "random",
                 "route": route.get('id'),
-                "vehsPerHour" : "1800" # TODO Make this depend on the scheme
+                "vehsPerHour" : str(vph),
             })
             xml_flows.append(xml_flow)
 

@@ -17,4 +17,10 @@ def compile_args():
                         , action="store_const"
                         , const=True
                         , default=False)
+    parser.add_argument('-d', '--dry-run'
+                        , dest="dry_run"
+                        , help="Don't run SUMO, just set up the files as would be."
+                        , action="store_const"
+                        , const=True
+                        , default=False)
     return parser.parse_args()
