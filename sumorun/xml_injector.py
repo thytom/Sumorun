@@ -21,7 +21,6 @@ def inject_vtypes_and_flows(tree: ET.Element, scheme:dict) -> ET.ElementTree:
         xml_vtype.set("id", vtype['id'])
         xml_vtype.set("minGap", vtype['minGap'])
         xml_vtype.set("speedFactor", vtype['speedFactor'])
-        xml_vtype.set("impatience", vtype['impatience'])
         xml_vtype.set("carFollowModel", vtype['carFollowModel'])
         xml_vtype.set("accel", vtype['accel'])
         xml_vtype.set("decel", vtype['decel'])
@@ -42,13 +41,14 @@ def inject_vtypes_and_flows(tree: ET.Element, scheme:dict) -> ET.ElementTree:
                 "id": route.get('id') + xml_vtype.get('id'),
                 "type": xml_vtype.get('id'),
                 "begin": "0.00",
-                "end": "3600.00",
+                "end": str(scheme.get("sim_hours") * 3600),
                 "departSpeed": "max",
                 "arrivalLane": "random",
                 "route": route.get('id'),
                 "vehsPerHour" : str(vph),
             })
-            xml_flows.append(xml_flow)
+            if vph > 0:
+                xml_flows.append(xml_flow)
 
     # Vehicle types must be added before.
     for xml_vtype in xml_vtypes:

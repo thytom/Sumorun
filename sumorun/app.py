@@ -40,6 +40,8 @@ def main():
     
     if interval_count == 0:
         print("No intervals. Proceeding with single run...")
+        varray = [None]
+        attrib_to_alter = None
     elif interval_count > 1:
         print("Multiple intervals in schemefile, cannot continue.")
     else:
@@ -54,9 +56,10 @@ def main():
     for (i, value) in enumerate(varray):
         out_dir = summary_dir + "_{}".format(i)
 
-        for (j,vtype) in enumerate(scheme['vtypes']):
-            if vtype.get('id') == vtype_altering:
-                scheme['vtypes'][j][attrib_to_alter] = value
+        if attrib_to_alter is not None:
+            for (j,vtype) in enumerate(scheme['vtypes']):
+                if vtype.get('id') == vtype_altering:
+                    scheme['vtypes'][j][attrib_to_alter] = value
 
         print("Performing vtype injection...")
         xml_injector.xml_inject_route_file(scheme)
