@@ -25,6 +25,7 @@ def inject_vtypes_and_flows(tree: ET.Element, scheme:dict) -> ET.ElementTree:
         xml_vtype.set("accel", vtype['accel'])
         xml_vtype.set("decel", vtype['decel'])
         xml_vtype.set("delta", vtype['delta'])
+        xml_vtype.set("tau", vtype['tau'])
         
         xml_vtypes.append(xml_vtype)
         
