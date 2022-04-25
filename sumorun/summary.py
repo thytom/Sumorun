@@ -7,8 +7,9 @@ def summary_report_as_str(summaries, attribute):
         for file in summaries:
             tree = ET.parse(file)
             root = tree.getroot()
-            highestarrival = [round(float(c.attrib[attribute]), 3) for c in root if c.tag == "step"]
-            arrived_counts.append(max(highestarrival))
+            # highestarrival = [round(float(c.attrib[attribute]), 3) for c in root if c.tag == "step"]
+            # arrived_counts.append(max(highestarrival))
+            arrived_counts.append(round(float(root[-1].attrib[attribute]),3))
 
         # return "{},{},{},{}".format(attribute, max(arrived_counts), min(arrived_counts), round(sum(arrived_counts)/len(arrived_counts), 3))
         return ','.join([str(a) for a in arrived_counts])

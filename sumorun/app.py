@@ -71,7 +71,9 @@ def main():
         summaries = iterator.iterate(config_file, out_dir, iterations)
         run_data.append(summaries)
 
+    print("Writing full output to out.csv...")
     summary.write_full_summary(run_data, attributes)
+    print("Done.")
 
     exit(0)
 
